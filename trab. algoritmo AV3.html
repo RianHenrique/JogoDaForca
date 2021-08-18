@@ -1,0 +1,142 @@
+<html>
+
+
+<button onclick="jogo()">Click Aqui</button>
+
+<meta charset="UTF-8">
+<script>
+
+function jogo(){
+
+começo0: while (true){
+  //palavras, dicas e temas
+  var palavras = [["porco","Toma banho na lama","Animal"],["pato","Seu nome está em um equipamento aquatico","Ave"],["papagaio","Animal que fala","Ave"],["pombo","Ave que transmite doença","Ave"],["caneta","Usado para escrever","Objeto"],["teniase","Causada pela ingestão de carne bovina ou suína mal cozida","Doença"],["leao","É considerado o rei da floresta","Animal"],["Ram","Não é sapo","hardware"],["Ema","Tem na unifor","Ave"],["Daniela","Melhor professora da unifor","Professora"]]
+  
+  //sorteia uma posiçao entre essas palavras
+  var j =  Math.floor(Math.random()*10)
+  
+  //atribui a palavra a ser descoberta na variavel palavra e deixa ela toda em maisculo.
+  var palavra = (palavras[j][0]).toUpperCase()
+  
+  //vetores
+  var letrasErradas = []
+  var letraCertas = []
+  var letraInceridas = []
+
+
+  var erros = 0
+  //limita o verificador de letras.
+  var cont = 0
+
+  //Contar o número de letras que a pessoa acertou da palavra.
+  var cont2 = 0
+
+  var quebraIf = true;
+  var vitoria = false;
+
+  //COLOCA OS TRAÇOS DE ACORDO COM O NUMERO DE LETRAS DA PALAVRA:
+
+  //Conta o numero de letras da palavra
+  var nletras = (palavra.length)
+
+  //atribui o traço nas posições de cada letra da palavra.
+  for(var i=0;i<nletras;i++){
+      letraCertas [letraCertas.length] = ("__ ")
+  }
+
+  //começa o jogo
+  começo1: while (true){
+    
+
+    //Pergunta a letra e mostra as informaçoes
+    var letra = (prompt((" ".repeat(50)) +(palavras[j][2]).toUpperCase()+"                  Vidas: "+(7-erros)+ "\nLetras erradas: "+ letrasErradas+ "\n\nPalavra:"+(" ".repeat(2))+letraCertas + "     "+ nletras +" letras\n" +"\nInforme a letra: ")).toUpperCase()
+    
+    //Verificar se a letra ja foi dita.
+    for(var i=0;i < cont;i++){     
+      if(letra == letraInceridas[i]){
+        
+        alert("Essa letra ja foi dita, informe outra!") 
+        continue começo1
+      }    
+    }    
+    cont++
+
+    //adiciona a letra na ultima posição do vetor "letrasInceridas"
+    letraInceridas [letraInceridas.length] = (letra)
+
+    //VAI VER SE A LETRA ESTÁ NA PALAVRA OU SE A PESSOA ACERTOU A PALAVRA TODA:
+
+    var cont3 = 0
+    //ira repertir comforme o numero de letras da palavra testando letra por letra.
+    for (var i=0;i<nletras;i++){
+      if(palavra[i] == letra || letra == palavra){
+        
+        //adiciona as letras acertadas na lista e coloca na ordem.
+        letraCertas[i] = (letra)
+
+        //Se não for contabilizado a letra está errada.
+        cont3++
+        
+        //verifica se a pessoa colocou a palavra certa.
+        if(letra == palavra){
+          vitoria = true;
+          break    
+        }    
+        
+        //Contar o número de letras que a pessoa acertou da palavra.
+        cont2++
+
+        
+      }
+      
+
+    }
+
+    // Se a letra não estiver certa um erro é contabilizado e será adicionada na lista "letrasErradas".
+    if(cont3 == 0){
+      letrasErradas [letrasErradas.length] = (letra)
+      erros++
+    }
+
+    //Mostra a dica quando tiver 6 erros.
+    if(erros == 6 && quebraIf){  
+      alert("DICA: " + ((palavras[j][1])).toUpperCase())
+
+      quebraIf = false
+    }
+    
+    //VERIFICA SE A PESSOA GANHOU O JOGO OU PERDEU E PERGUNTA SE QUER CONTINUAR JOGANDO OU NÃO:
+    if(cont2 == (nletras) || vitoria){
+
+      alert("Parabéns, você venceu!" + "\nA palavra era: "+ palavra)
+      var resp = (prompt("deseja continuar? [S/N]")).toUpperCase()
+      break
+    }else if (erros == 7){
+
+      alert("Você perdeu!"+"\nA palavra era: "+ palavra)
+      var resp = (prompt("deseja continuar? [S/N]")).toUpperCase()
+      break
+    }
+  
+  }
+
+  if (resp == "S"){
+    continue começo0
+  } 
+
+  if (resp == "N"){
+    break
+  }
+    
+
+   }
+  
+
+
+document.write("Jogo Encerrado!")
+
+}
+
+</script>
+
+</html>
